@@ -49,14 +49,14 @@ def f(l, d, a, o, r, c)
   # a is a pointer to d. it can't be larger than the index of the last element, which is 3.
   # o is modified and passed along
   # r and c are also modified and passed along
-  o = f(l + 1, d, a == 3 ? 0 : a + 1, o, r, c)
+  o = f(l + 1, d, (l - 1) % 4, o, r, c)
 end
 
 def test
   inputs = [[3, 4], [4, 3], [4, 5], [5, 4], [7, 6], [5, 15], [15, 15], [15, 5], [3, 3], [1, 1]]
 
-  inputs.each do |input|
-    result = f(2, [[1, 0], [0, 1], [-1, 0], [0, -1]], 0, Array.new(input[1]) { Array.new(input[0], 0) }, (input[1]-1) / 2, (input[0]-1) / 2)
+  inputs.each do |c,r|
+    result = f(2, [[1, 0], [0, 1], [-1, 0], [0, -1]], 0, Array.new(r) {[0]*c}, (r-1) / 2, (c-1) / 2)
     result.each do |row|
       print row.join " "
       print "\n"
